@@ -4,7 +4,7 @@
       <div slot="center">购物街</div>
     </nav-bar>
 
-    <!-- 用于吸顶时显示 -->
+    <!-- 用于吸顶时显示的tabControl -->
     <tab-control class="tab-control" :titles="['流行','新款','精选']" @tab-click="tabControl" ref="tabControl2" :class="{Sticky: isSticky}" v-show="isSticky"></tab-control>
 
     <scroll class="wrapper" ref="scroll" :probeType="3" :pullUpLoad="true" @scroll="scrollPosition" @pulling-up="pullingUp">
@@ -30,7 +30,7 @@
   import FeatureView from "./childComps/FeatureView.vue"
 
   import { getHomeMultidata, getHomeGoods } from "network/home.js";
-  
+  import { itemListenerMixin } from "common/mixin.js";
   
   
   export default {
@@ -39,6 +39,7 @@
       NavBar,HomeSwiper,RecommendView,FeatureView,TabControl,GoodsList,Scroll,
         BackTop,
     },
+    mixins: [itemListenerMixin],
     destroyed () {
       console.log('destroy');
     },
@@ -51,8 +52,12 @@
     },
     deactivated () {
       // console.log('deactivated');
+      // 保存Y值
       this.saveY = this.$refs.scroll.getScrollY()
       // console.log(this.saveY);
+      
+      // 取消Home对全局事件的监听
+      this.$bus.$off('itemImgLoad',this.imgListener)
     },
     data () {
       return {
@@ -72,7 +77,7 @@
         // timer: null,
         tabOffsetTop: 0,
         isSticky: false,
-        saveY: 0
+        saveY: 0,
       }
     },
     computed: {
@@ -84,26 +89,24 @@
       this.getHomeMultidata();
       this.getHomeGoods('pop');
       this.getHomeGoods('new');
-      this.getHomeGoods('sell');
-      
-      
+      this.getHomeGoods('sell');  
     },
     methods: {
       /**
        * 事件监听
        */
       // 防抖函数
-      debounce(func, delay) {
-        let timer = null;
+      // debounce(func, delay) {
+      //   let timer = null;
 
-        return function(...args) {
-          if(timer) clearTimeout(timer)
-          // console.log(timer);
-          timer = setTimeout(() => {
-            func.apply(this,args)
-          }, delay);
-        }
-      },
+      //   return function(...args) {
+      //     if(timer) clearTimeout(timer)
+      //     // console.log(timer);
+      //     timer = setTimeout(() => {
+      //       func.apply(this,args)
+      //     }, delay);
+      //   }
+      // },
       tabControl(index) {
         // console.log(item);
         if(index==0){
@@ -163,23 +166,22 @@
 
     },
     mounted () {
-      const refresh = this.debounce(this.$refs.scroll.refresh,100)
-      // 图片加载刷新，解决better-scroll不能滚动bug
-      this.$bus.$on('itemImgLoad',()=> {
-        // console.log('load');
-        refresh()
+      // const refresh = this.debounce(this.$refs.scroll.refresh,100)
+      // // 图片加载刷新，解决better-scroll不能滚动bug
+      // this.imgListener = ()=> {
+      //   console.log('load');
+      //   refresh()
 
-        // 未封装
-        // if(this.timer) clearTimeout(this.timer)
-        // this.timer = setTimeout(() => {
-        //   this.$refs.scroll.refresh()
-        // }, 100);
-      })
+      //   // 未封装
+      //   // if(this.timer) clearTimeout(this.timer)
+      //   // this.timer = setTimeout(() => {
+      //   //   this.$refs.scroll.refresh()
+      //   // }, 100);
+      // }
+      // this.$bus.$on('itemImgLoad',this.imgListener)
       
-      // 吸顶效果
-      // 所有的组件都有一个元素$el 获取组件内的首元素
-      
-    }
+    },
+    
   }
 </script>
 

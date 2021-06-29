@@ -21,7 +21,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   .recommend {
     display: flex;
     text-align: center;
