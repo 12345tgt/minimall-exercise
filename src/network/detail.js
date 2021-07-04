@@ -3,7 +3,7 @@ import { request } from "./request";
 export function getDetail(iid) {
   return request({
     // url: 'detail?iid='+iid
-    url: 'detail',
+    url: '/detail',
     params: {
       iid
     }
@@ -23,6 +23,7 @@ export class Goods {
     this.newPrice = itemInfo.price;
     this.oldPrice = itemInfo.oldPrice;
     this.discount = itemInfo.discountDesc;
+    this.lowNowPrice = itemInfo.lowNowPrice
     this.columns = columns;
     this.services = services;
     this.nowPrice = itemInfo.highNowPrice;

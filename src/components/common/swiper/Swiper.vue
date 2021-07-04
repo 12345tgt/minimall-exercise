@@ -4,7 +4,7 @@
         <img src="~assets/img/common/back.svg" alt="" class="back" @click="back">
         <img src="~assets/img/common/next.svg" alt="" class="next" @click="next">
         <slot>
-          轮播图
+          <!-- 轮播图 -->
         </slot>
       </div>
 

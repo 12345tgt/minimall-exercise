@@ -16,7 +16,7 @@ const routes = [
   { path: '/category', component: category, meta: { title: '分类' } },
   { path: '/home', component: home, meta: { title: '首页' }},
   { path: '/profile', component: profile, meta: { title: '我的' }},
-  { path: '/detail/:id', component: detail, meta: { title: '详情'}},
+  { path: '/detail', component: detail, meta: { title: '详情'}},
 ]
 
 const router = new VueRouter({

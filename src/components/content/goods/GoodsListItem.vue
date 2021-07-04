@@ -1,6 +1,7 @@
 <template>
   <div class="goods-item" @click="itemClick">
-    <img :src="showImg" alt="" @load="imgLoad" >
+    <!-- <img :src="showImg" alt="" @load="imgLoad" > -->
+    <img v-lazy="showImg" alt="" @load="imgLoad" >
     <!-- <img :src="goodsItem.image" alt="" @load="imgLoad" v-else> -->
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
@@ -26,7 +27,12 @@
         this.$bus.$emit('itemImgLoad')
       },
       itemClick() {
-        this.$router.push('/detail/' + this.goodsItem.iid)
+        this.$router.push({
+          path: '/detail',
+          query: {
+            iid: this.goodsItem.iid
+          }
+        })
         // this.$router.push('/detail')
       }
     },

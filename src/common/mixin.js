@@ -17,3 +17,23 @@ export const itemListenerMixin = {
 
   }
 }
+
+// 回到顶部
+import BackTop from 'components/content/backTop/BackTop.vue'
+
+export const backTopMixin = {
+  components: {
+    BackTop
+  },
+  data () {
+    return {
+      isAppear: false
+    }
+  },
+  methods: {
+    backTop() {
+      // console.log(this.$refs.scroll);
+      this.$refs.scroll.scrollTo(0,0)
+    },
+  }
+}

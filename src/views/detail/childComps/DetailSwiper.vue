@@ -74,9 +74,7 @@
 </script>
 
 <style scoped>
-  .detail-swiper {
-
-  }
+  
   .swiper {
     height: 300px;
     overflow: hidden;

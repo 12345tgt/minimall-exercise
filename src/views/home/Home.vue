@@ -23,23 +23,23 @@
   import TabControl from "components/content/TabControl/TabControl.vue"
   import GoodsList from "components/content/goods/GoodsList.vue"
   import Scroll from 'components/common/scroll/Scroll.vue'
-  import BackTop from 'components/content/backTop/BackTop.vue'
+
 
   import HomeSwiper from "./childComps/HomeSwiper";
   import RecommendView from "./childComps/RecommendView.vue"
   import FeatureView from "./childComps/FeatureView.vue"
 
   import { getHomeMultidata, getHomeGoods } from "network/home.js";
-  import { itemListenerMixin } from "common/mixin.js";
+  import { itemListenerMixin, backTopMixin } from "common/mixin.js";
   
   
   export default {
     name: "Home",
     components: {
       NavBar,HomeSwiper,RecommendView,FeatureView,TabControl,GoodsList,Scroll,
-        BackTop,
+
     },
-    mixins: [itemListenerMixin],
+    mixins: [itemListenerMixin, backTopMixin],
     destroyed () {
       console.log('destroy');
     },
@@ -73,7 +73,7 @@
         
         type: 'pop',
         bs: null,
-        isAppear: false,
+
         // timer: null,
         tabOffsetTop: 0,
         isSticky: false,
@@ -123,11 +123,7 @@
         this.$refs.tabControl2.currentIndex = index
 
       },
-      //返回顶点
-      backTop() {
-        // console.log(this.$refs.scroll);
-        this.$refs.scroll.scrollTo(0,0)
-      },
+
       scrollPosition(position) {
         // console.log(position);
         // 判断backTop是否显示
